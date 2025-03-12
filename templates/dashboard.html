@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Agro Transport </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css'%}">
+    <script src="{% static 'js/dashboard.js'%}"></script>
+</head>
+<body>
+{% for i in data %}
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo">TRANSPORT PRO</a>
+            <div>
+                <a href="/logout" class="action-button">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        <section class="welcome-section">
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-avatar-section">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="User Avatar" class="user-avatar">
+                        <div class="profile-status">
+                            <span class="status-badge">Active</span>
+                        </div>
+                    </div>
+                    <div class="profile-intro">
+                        <h1>{{ i.name }}</h1>
+                        <p class="member-since">
+                            <i class="fas fa-clock"></i> Member since: January 2024
+                        </p>
+                    </div>
+                </div>
+
+                <div class="profile-details">
+                    <div class="profile-card">
+                        <div class="profile-info-group">
+                            <div class="info-item">
+                                <i class="fas fa-envelope"></i>
+                                <div class="info-content">
+                                    <label>Email</label>
+                                    <p> {{i.email}} </p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-phone"></i>
+                                <div class="info-content">
+                                    <label>Phone</label>
+                                    <p> {{i.number}}  </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-info-group">
+                            <div class="info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div class="info-content">
+                                    <label>Address</label>
+                                    <p> {{i.address }} </p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-city"></i>
+                                <div class="info-content">
+                                    <label>City</label>
+                                    <p> {{i.city }} </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-info-group">
+                            <div class="info-item">
+                                <i class="fas fa-map"></i>
+                                <div class="info-content">
+                                    <label>State</label>
+                                    <p>  {{ i.state}}</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-hashtag"></i>
+                                <div class="info-content">
+                                    <label>Pincode</label>
+                                    <p>{{ i.pincode }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="editprofile?id={{i.id}}" style="text-decoration: none;">
+                    <button class="edit-profile-btn">
+                        <i class="fas fa-edit"></i> Edit Profile
+                    </button>
+                </a>
+
+                </div>
+            </div>
+        </section>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h2 class="card-title">Book Transport</h2>
+                </div>
+                <p>Schedule a new transport service for your goods</p>
+                <div class="booking-options">
+                    <a href="/book" class="action-button" target="_blank">
+                        <i class="fas fa-plus"></i> New Booking
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+<section class="recent-bookings">
+    <h2 class="section-title">Recent Bookings</h2>
+
+    {% if bookings %}
+        <div class="bookings-list">
+            {% for booking in bookings %}
+                <div class="booking-entry">
+                    <div class="booking-content">
+                        <div class="booking-left">
+                            <h3 class="route">{{ booking.pickup }} to {{ booking.delivery }}</h3>
+                            <div class="booking-details">
+                                <p>Good Type: {{ booking.goodtype }}</p>
+                                <p>Vehicle Type: {{ booking.vehicletype }}</p>
+                                <p>Pickup Date: {{ booking.pickupdate }}</p>
+                                <p>Distance: {{ booking.distance }} km</p>
+                                <p>Amount: ₹{{ booking.amount }} ({{ booking.distance }}km × ₹50/km)</p>
+                                <p>Booking ID: {{ forloop.counter }}</p>
+                            </div>
+                        </div>
+                        <div class="booking-right">
+                    <button class="pay-advance-btn" onclick="window.open('/payment?amount={{ booking.amount }}', '_blank')">
+                        <i class="fas fa-wallet"></i>
+                        Pay Advance
+                    </button>
+                </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-bookings">No bookings found.</p>
+    {% endif %}
+</section>
+
+    </main>
+
+{% endfor %}
+</body>
+</html>
