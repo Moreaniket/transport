@@ -1,1 +1,2 @@
-web: gunicorn transport.wsgi.application
+web: gunicorn transport.wsgi:application
+
