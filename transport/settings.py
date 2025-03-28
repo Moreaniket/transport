@@ -70,6 +70,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'transport.wsgi.application'
+web: gunicorn transport.wsgi:application
 
 
 # Database
