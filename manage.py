@@ -18,5 +18,9 @@ def main():
     execute_from_command_line(sys.argv)
 
 
-if __name__ == '__main__':
-    main()
+
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    os.system(f"gunicorn -b 0.0.0.0:{port} transport.wsgi:application")
+
