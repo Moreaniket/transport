@@ -15,7 +15,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-default-secret-key')  # Use an
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'  # Set to 'True' for local testing, 'False' for production
-
+PORT = os.getenv("PORT", "10000") 
 ALLOWED_HOSTS = ['transport-w5m5.onrender.com', 'localhost', '127.0.0.1']
 
 # Application definition
